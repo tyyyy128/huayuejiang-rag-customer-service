@@ -1,0 +1,111 @@
+<view class="page">
+
+<!-- 顶部品牌区域 -->
+<view class="header">
+  <view class="brand">
+    <view class="logo">HYJ</view>
+
+    <view class="brand-text">
+      <view class="title">华越疆智能客服</view>
+      <view class="subtitle">智能农机产品与服务咨询</view>
+    </view>
+  </view>
+
+  <view class="header-tools">
+
+<view class="online-status">
+  <view class="online-dot"></view>
+  <text>智能客服在线</text>
+</view>
+
+<view
+  class="new-session-button"
+  bindtap="startNewSession"
+>
+  新建会话
+</view>
+
+</view>
+</view>
+
+<!-- 聊天消息区域 -->
+<scroll-view
+  class="chat-list"
+  scroll-y
+  scroll-with-animation
+  scroll-into-view="{{scrollIntoView}}"
+  show-scrollbar="{{false}}"
+>
+  <view class="chat-inner">
+
+    <block wx:for="{{messages}}" wx:key="id">
+
+      <view
+        id="{{item.id}}"
+        class="message-row {{item.role === 'user' ? 'user-row' : 'assistant-row'}}"
+      >
+
+        <!-- 客服头像 -->
+        <view
+          wx:if="{{item.role === 'assistant'}}"
+          class="avatar assistant-avatar"
+        >
+          华
+        </view>
+
+        <!-- 消息气泡 -->
+        <view
+          class="message-bubble {{item.role === 'user' ? 'user-bubble' : 'assistant-bubble'}}"
+        >
+          <text>{{item.text}}</text>
+        </view>
+
+        <!-- 用户头像 -->
+        <view
+          wx:if="{{item.role === 'user'}}"
+          class="avatar user-avatar"
+        >
+          我
+        </view>
+
+      </view>
+
+    </block>
+
+  </view>
+</scroll-view>
+
+<!-- 底部输入区域 -->
+<view class="composer">
+
+  <view class="input-row">
+
+    <input
+      class="message-input"
+      value="{{inputText}}"
+      placeholder="请输入您的问题..."
+      placeholder-class="input-placeholder"
+      maxlength="500"
+      confirm-type="send"
+      bindinput="onInput"
+      bindconfirm="sendMessage"
+    />
+
+    <button
+      class="send-button {{inputText ? 'send-button-active' : ''}}"
+      disabled="{{!inputText || sending}}"
+      loading="{{sending}}"
+      bindtap="sendMessage"
+    >
+      发送
+    </button>
+
+  </view>
+
+  <view class="privacy-tip">
+    请勿发送账号、密码等敏感信息
+  </view>
+
+</view>
+
+</view>
